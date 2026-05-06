@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+<title>节气灵境·三语共生</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#1a140e;font-family:'Noto Serif SC','KaiTi',serif;padding:0.5rem;min-height:100vh}
+.scroll-master{max-width:1480px;margin:0 auto;background:rgba(245,236,218,0.92);border-radius:60px 28px 72px 28px;box-shadow:0 30px 50px rgba(0,0,0,0.35);padding:0.5rem 0.8rem 1rem;border:1px solid #dcc8a0}
+.header-sacred{text-align:center;border-bottom:2px solid #ceb27a;padding-bottom:0.4rem;margin-bottom:0.8rem}
+.header-sacred h1{font-size:2.2rem;letter-spacing:6px;color:#2d1f0e;text-shadow:2px 2px 4px rgba(80,50,20,0.2)}
+.header-sacred h1 small{font-size:0.7rem;background:#dfcdab;padding:2px 12px;border-radius:40px;margin-left:8px;font-weight:normal}
+.sub-inspire{margin-top:4px;display:flex;justify-content:center;gap:12px;font-size:0.65rem;color:#7b5e3c;flex-wrap:wrap}
+.sub-inspire span{background:#f2e6d4;padding:2px 12px;border-radius:40px}
+.accordion-gallery{display:flex;gap:12px;height:74vh;overflow-x:auto;padding:6px 2px 12px;align-items:center}
+.accordion-gallery::-webkit-scrollbar{height:4px}
+.accordion-gallery::-webkit-scrollbar-thumb{background:#b88d54;border-radius:8px}
+.card-term{position:relative;width:72px;height:84%;border-radius:28px;transition:all 0.5s cubic-bezier(0.15,0.85,0.35,1.1);cursor:pointer;flex-shrink:0;overflow:hidden;box-shadow:0 12px 24px rgba(0,0,0,0.4)}
+.card-term:hover{transform:scale(1.01)}
+.card-term.active{width:620px;background:#fffcf0!important}
+.title-vertical{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);writing-mode:vertical-rl;font-size:24px;letter-spacing:8px;color:#fff9e8;text-shadow:0 0 10px #1a0e04;font-family:"Ma Shan Zheng",cursive;pointer-events:none;white-space:nowrap}
+.card-term.active .title-vertical{display:none}
+.detail-panel{display:none;width:100%;height:100%;overflow-y:auto;padding:10px 14px}
+.card-term.active .detail-panel{display:block}
+.charm-card{background:rgba(250,243,230,0.88);border-radius:24px;padding:10px 14px;margin-bottom:12px;border-left:5px solid #c2a15b}
+.section-legend{font-size:0.95rem;font-weight:bold;color:#5a391e;border-bottom:1px dashed #d4bc90;padding-bottom:4px;margin-bottom:8px}
+.lang-switch-set{display:flex;gap:8px;margin:6px 0}
+.lang-pill{background:#ede0cd;border:none;padding:3px 14px;border-radius:40px;cursor:pointer;font-family:inherit;font-size:0.75rem}
+.lang-pill.active{background:#b48c48;color:#fff}
+.trilingual-box{background:#fffcf0;padding:8px 12px;border-radius:16px;line-height:1.5;font-size:0.8rem}
+.poem-miniature{background:#fef5e6;border-radius:16px;padding:6px;margin-top:8px;font-size:0.7rem;border:1px solid #ecdbba}
+.quad-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.quad-img{background-size:cover!important;background-position:center!important;border-radius:14px;aspect-ratio:1/1;box-shadow:inset 0 0 0 2px #faf0df}
+.qa-item{background:#f8efdf;border-radius:30px;padding:5px 12px;margin-bottom:6px;cursor:pointer;display:flex;justify-content:space-between;font-size:0.75rem}
+.qa-answer-panel{display:none;margin-top:4px;background:#fff7eb;padding:8px;border-radius:20px;font-size:0.7rem;line-height:1.4}
+.chat-input-row{display:flex;gap:4px;margin-top:6px}
+.chat-input-row input{flex:3;padding:4px 10px;border-radius:40px;border:1px solid #cfb380;background:#fffcf5;font-size:0.7rem}
+.chat-input-row button{background:#b48c48;border:none;color:#fff;padding:4px 12px;border-radius:40px;cursor:pointer;font-size:0.7rem}
+.chat-response{background:#fcf6e8;padding:6px 10px;border-radius:16px;margin-top:6px;font-size:0.7rem;display:none;border-left:3px solid #b48c48}
+.emotion-cloud{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px 0}
+.emotion-btn{background:#e9dac8;border:none;padding:4px 14px;border-radius:40px;cursor:pointer;font-family:inherit;font-size:0.75rem;transition:0.15s}
+.emotion-btn:hover{background:#b48c48;color:#fff}
+canvas.cloud-canvas{width:100%;height:120px;display:block;border-radius:14px}
+.resonance-hint{font-size:0.6rem;color:#906e42}
+.postcard-preview{display:none;margin:6px auto;max-width:280px}
+.postcard-canvas{width:100%;border-radius:14px}
+.postcard-actions{display:flex;gap:6px;justify-content:center;margin:6px 0}
+.postcard-btn{background:#7a582c;border:none;color:#fff;padding:4px 14px;border-radius:40px;cursor:pointer;font-size:0.7rem}
+.audio-theater{background:rgba(245,236,218,0.7);border-radius:24px;padding:8px 12px;margin-top:10px}
+.audio-track{display:flex;align-items:center;gap:6px;margin:4px 0;font-size:0.7rem}
+.audio-track input[type=range]{flex:1;height:3px;accent-color:#b48c48}
+.audio-track .track-label{min-width:56px;color:#5a391e}
+.narration-select{display:flex;gap:4px;margin:6px 0;align-items:center}
+.narration-select button{background:#ede0cd;border:none;padding:2px 10px;border-radius:30px;cursor:pointer;font-size:0.65rem}
+.narration-select button.active{background:#b48c48;color:#fff}
+.tts-play-btn{background:#8f6b3e;border:none;color:#fff;padding:3px 12px;border-radius:40px;cursor:pointer;font-size:0.65rem}
+.footprint-bar{display:flex;align-items:center;gap:4px;margin:0.3rem 0 0.6rem;padding:4px 10px;background:rgba(240,228,210,0.6);border-radius:40px;font-size:0.7rem;color:#7b5e3c;overflow-x:auto}
+.footprint-dot{width:16px;height:16px;border-radius:50%;background:#dcccaf;flex-shrink:0;border:1px solid #c2a15b;transition:0.3s;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:8px}
+.footprint-dot.unlocked{background:#b48c48;border-color:#7a582c;color:#fff}
+.fp-progress-text{margin-left:auto;font-weight:bold;color:#2d1f0e}
+.close-ritual{display:none;position:absolute;top:8px;right:10px;background:rgba(0,0,0,0.3);border:none;border-radius:50%;width:24px;height:24px;color:#f7efdb;font-size:16px;cursor:pointer;z-index:20;align-items:center;justify-content:center}
+.card-term.active .close-ritual{display:flex}
+@media(max-width:700px){.card-term.active{width:94vw}.header-sacred h1{font-size:1.4rem;letter-spacing:3px}}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="scroll-master">
+  <div class="header-sacred">
+    <h1>節氣靈境·三語共生 <small>诗画·智问·共鸣·音场</small></h1>
+    <div class="sub-inspire">
+      <span>🎋 古风手风琴</span><span>🖌️ AI诗画</span><span>🌐 三语智问</span>
+      <span>💞 共鸣云图</span><span>🎵 四时音场</span>
+    </div>
+  </div>
+  <div class="footprint-bar" id="footprintBar"></div>
+  <div class="accordion-gallery" id="accordionGenesis"></div>
+  <div class="audio-theater">
+    <div style="font-size:0.85rem;font-weight:bold;color:#5a391e;margin-bottom:4px;">🎵 四时音场</div>
+    <div class="audio-track"><span class="track-label">🏔️ 环境</span><input type="range" id="envVol" min="0" max="1" step="0.05" value="0.6"><span id="envLbl">60%</span></div>
+    <div class="audio-track"><span class="track-label">🎶 古乐</span><input type="range" id="musVol" min="0" max="1" step="0.05" value="0.5"><span id="musLbl">50%</span></div>
+    <div class="audio-track"><span class="track-label">🗣️ 旁白</span><input type="range" id="ttsVol" min="0" max="1" step="0.05" value="0.8"><span id="ttsLbl">80%</span></div>
+    <div class="narration-select">
+      <span style="font-size:0.65rem;color:#5a391e;">语种:</span>
+      <button class="active" data-narr="zh">中文</button><button data-narr="jp">日本語</button><button data-narr="en">English</button>
+      <span style="margin-left:auto;"><button class="tts-play-btn" id="playNarration">▶ 诵读</button></span>
+    </div>
+  </div>
+</div>
+<script>
+const ST=[
+  {id:"立春",cn:"立春",jp:"立春",en:"Start of Spring",sea:"spring",dz:"立春为岁首，东风解冻，蛰虫始振。迎春咬春，阳气升腾，万物复苏。",dj:"立春は一年の始まり。東風が凍てつきを解かし、虫が動き始める。",de:"Start of Spring: east wind thaws ice, insects stir.",pz:"东风带雨逐西风，大地阳和暖气生。万物苏萌山水醒，农家岁首又谋耕。",pj:"東風雨を帯びて西風を逐い、大地陽和にして暖気生ず。",pe:"East wind chases west wind; warm earth awakens."},
+  {id:"雨水",cn:"雨水",jp:"雨水",en:"Rain Water",sea:"spring",dz:"降雨渐增，草木萌动，水獭祭鱼，鸿雁北归。",dj:"雨が増え、草木が芽吹く。",de:"Rain increases, buds appear.",pz:"怅卧新春白袷衣，白门寥落意多违。红楼隔雨相望冷，珠箔飘灯独自归。",pj:"新春に怅として白袷の衣",pe:"Spring rain on the capital."},
+  {id:"惊蛰",cn:"惊蛰",jp:"啓蟄",en:"Awakening of Insects",sea:"spring",dz:"春雷始鸣，蛰虫惊走。桃花红，仓庚鸣。",dj:"春雷が鳴り冬眠の虫が目覚める。",de:"Spring thunder awakens insects.",pz:"一声霹雳醒蛇虫，几阵潇潇染紫红。九九江南风送暖，融融翠野启春耕。",pj:"一霹靂蛇虫を醒まし",pe:"Thunder wakes snakes and worms."},
+  {id:"春分",cn:"春分",jp:"春分",en:"Spring Equinox",sea:"spring",dz:"昼夜均分，玄鸟至，雷声始电。",dj:"昼夜が等しく、燕が帰る。",de:"Equal day and night, swallows return.",pz:"春分雨脚落声微，柳岸斜风带客归。",pj:"春分の雨脚は声微かに落ち",pe:"Spring equinox rain falls soft."},
+  {id:"清明",cn:"清明",jp:"清明",en:"Pure Brightness",sea:"spring",dz:"气清景明，桐花始华，彩虹出现。",dj:"清浄明潔、桐の花咲く。",de:"Clear and bright, paulownia blooms.",pz:"清明时节雨纷纷，路上行人欲断魂。借问酒家何处有，牧童遥指杏花村。",pj:"清明の時節雨紛紛",pe:"A drizzling rain falls."},
+  {id:"谷雨",cn:"谷雨",jp:"穀雨",en:"Grain Rain",sea:"spring",dz:"雨生百谷，浮萍生，布谷催耕。",dj:"雨が穀物を育て、浮き草が生える。",de:"Rain nurtures grains, cuckoos call.",pz:"雨频霜断气清和，柳绿茶香燕弄梭。",pj:"雨頻り霜断ち気清和",pe:"Frequent rains end frost."},
+  {id:"立夏",cn:"立夏",jp:"立夏",en:"Start of Summer",sea:"summer",dz:"夏季开始，蝼蝈鸣，蚯蚓出。",dj:"夏の始まり、ケラが鳴く。",de:"Summer begins, crickets chirp.",pz:"赤帜插城扉，东君整驾归。泥新巢燕闹，花尽蜜蜂稀。",pj:"赤旗城扉に挿し",pe:"Red flags at city gates."},
+  {id:"小满",cn:"小满",jp:"小満",en:"Grain Buds",sea:"summer",dz:"麦粒渐满，苦菜秀。",dj:"麦の実が膨らむ。",de:"Wheat grains plump.",pz:"夜莺啼绿柳，皓月醒长空。最爱垄头麦，迎风笑落红。",pj:"夜鶯緑柳に啼き",pe:"Nightingales sing in green willows."},
+  {id:"芒种",cn:"芒种",jp:"芒種",en:"Grain in Ear",sea:"summer",dz:"有芒之谷可播种，螳螂生。",dj:"芒のある穀物を蒔く。",de:"Harvest awned wheat.",pz:"梅黄时节怯衣单，五月江吴麦秀寒。",pj:"梅黄の時節衣単を怯る",pe:"Plum season, wheat ears brave cold."},
+  {id:"夏至",cn:"夏至",jp:"夏至",en:"Summer Solstice",sea:"summer",dz:"白昼最长，阳极阴生。",dj:"昼が最も長い。陽極まり陰生ず。",de:"Longest day, yang peaks.",pz:"璿枢无停运，四序相错行。寄言赫曦景，今日一阴生。",pj:"璿枢停運無く",pe:"Northern stars turn without rest."},
+  {id:"小暑",cn:"小暑",jp:"小暑",en:"Minor Heat",sea:"summer",dz:"温风至，蟋蟀居宇，鹰始鸷。",dj:"温風至り、蟋蟀宇に居る。",de:"Warm winds arrive, crickets dwell.",pz:"倏忽温风至，因循小暑来。竹喧先觉雨，山暗已闻雷。",pj:"倏忽温風至り",pe:"Sudden warm wind arrives."},
+  {id:"大暑",cn:"大暑",jp:"大暑",en:"Major Heat",sea:"summer",dz:"腐草为萤，土润溽暑，大雨时行。",dj:"腐草蛍と為り、土潤溽暑。",de:"Fireflies from grass, damp heat.",pz:"赤日几时过，清风无处寻。经书聊枕籍，瓜李漫浮沉。",pj:"赤日幾時か過ぎん",pe:"Red sun when will pass?"},
+  {id:"立秋",cn:"立秋",jp:"立秋",en:"Start of Autumn",sea:"autumn",dz:"凉风至，白露降，寒蝉鸣。",dj:"涼しい風が吹く。白露降りる。",de:"Cool breezes arrive, dew descends.",pz:"乳鸦啼散玉屏空，一枕新凉一扇风。",pj:"乳鸦啼き散る玉屏空し",pe:"Young crows fly off."},
+  {id:"处暑",cn:"处暑",jp:"処暑",en:"End of Heat",sea:"autumn",dz:"暑气消退，鹰乃祭鸟，天地始肃。",dj:"暑気が収まる。鷹鳥を祭る。",de:"Heat subsides, hawks sacrifice.",pz:"疾风驱急雨，残暑扫除空。因识炎凉态，都来顷刻中。",pj:"疾風急雨を駆り",pe:"Swift wind drives urgent rain."},
+  {id:"白露",cn:"白露",jp:"白露",en:"White Dew",sea:"autumn",dz:"露凝白，鸿雁来，玄鸟归。",dj:"露が白く染まる。鴻雁来る。",de:"White dew, wild geese arrive.",pz:"露从今夜白，月是故乡明。",pj:"露は今夜より白し",pe:"Dew turns white tonight."},
+  {id:"秋分",cn:"秋分",jp:"秋分",en:"Autumnal Equinox",sea:"autumn",dz:"昼夜均，雷始收声，蛰虫坯户。",dj:"昼夜等しく、雷声を収める。",de:"Day and night equal.",pz:"暑退秋澄转爽凉，日光夜色两均长。",pj:"暑退き秋澄み轉爽涼",pe:"Heat retreats, autumn clears."},
+  {id:"寒露",cn:"寒露",jp:"寒露",en:"Cold Dew",sea:"autumn",dz:"露气寒冷，鸿雁来宾，菊有黄华。",dj:"露気寒冷、鴻雁賓と為る。",de:"Cold dew, chrysanthemums bloom.",pz:"萧疏桐叶上，月白露初团。滴沥珠光满，荧煌素影寒。",pj:"蕭疏桐葉上",pe:"On sparse leaves, dew gathers."},
+  {id:"霜降",cn:"霜降",jp:"霜降",en:"Frost's Descent",sea:"autumn",dz:"霜始降，草木黄落，蛰虫咸俯。",dj:"初霜が降りる。草木黄落し。",de:"First frost, leaves fall.",pz:"远上寒山石径斜，白云生处有人家。停车坐爱枫林晚，霜叶红于二月花。",pj:"遠く寒山に上る石径斜めなり",pe:"Frost leaves redder than spring flowers."},
+  {id:"立冬",cn:"立冬",jp:"立冬",en:"Start of Winter",sea:"winter",dz:"水始冰，地始冻，雉入大水为蜃。",dj:"水が凍り始める。地凍り始める。",de:"Water freezes, earth hardens.",pz:"落水荷塘满眼枯，西风渐作北风呼。",pj:"落水荷塘満眼枯",pe:"Lotus pond withers all in sight."},
+  {id:"小雪",cn:"小雪",jp:"小雪",en:"Minor Snow",sea:"winter",dz:"虹藏不见，天气上升，闭塞成冬。",dj:"虹藏れて見えず、閉塞して冬と成る。",de:"Rainbows hide, winter closes in.",pz:"花雪随风不厌看，更多还肯失林峦。愁人正在书窗下，一片飞来一片寒。",pj:"花雪風に随い厭うて看ず",pe:"Snowflakes dance with wind."},
+  {id:"大雪",cn:"大雪",jp:"大雪",en:"Major Snow",sea:"winter",dz:"雪量增大，天地苍茫。",dj:"雪が深まる。天地蒼茫。",de:"Heavy snow, vast white wilderness.",pz:"千山鸟飞绝，万径人踪灭。孤舟蓑笠翁，独钓寒江雪。",pj:"千山鳥飛ぶこと絶え",pe:"Lone fisherman on snowy river."},
+  {id:"冬至",cn:"冬至",jp:"冬至",en:"Winter Solstice",sea:"winter",dz:"阴极阳生，数九开始。",dj:"陰極まり陽生ず。数九始まる。",de:"Yin peaks, yang arises.",pz:"年年至日长为客，忽忽穷愁泥杀人。",pj:"年々至日長く客と為る",pe:"Each solstice a wanderer."},
+  {id:"小寒",cn:"小寒",jp:"小寒",en:"Minor Cold",sea:"winter",dz:"雁北乡，鹊始巢，雉始雊。",dj:"雁北に郷う。鵲始めて巣くう。",de:"Geese head north, magpies nest.",pz:"江雨蒙蒙作小寒，雪飘五老发毛斑。城中咫尺云横栈，独立前山望后山。",pj:"江雨蒙蒙小寒を作す",pe:"River rain in Minor Cold."},
+  {id:"大寒",cn:"大寒",jp:"大寒",en:"Major Cold",sea:"winter",dz:"寒气至极，鸡始乳，征鸟厉疾。",dj:"寒気極まる。鶏始めて乳す。",de:"Cold peaks, chickens hatch.",pz:"大寒雪未消，闭户不能出。可怜切云冠，局此容膝室。",pj:"大寒雪未だ消えず",pe:"Major Cold, snow lingers."}
+];
+// === 固定图片 ===
+const TERM_FILES = {
+  '立春':'lichun','雨水':'yushui','惊蛰':'jingzhe','春分':'chunfen',
+  '清明':'qingming','谷雨':'guyu','立夏':'lixia','小满':'xiaoman',
+  '芒种':'mangzhong','夏至':'xiazhi','小暑':'xiaoshu','大暑':'dashu',
+  '立秋':'liqiu','处暑':'chushu','白露':'bailu','秋分':'qiufen',
+  '寒露':'hanlu','霜降':'shuangjiang','立冬':'lidong','小雪':'xiaoxue',
+  '大雪':'daxue','冬至':'dongzhi','小寒':'xiaohan','大寒':'dahan'
+};
+function termImg(t){return 'qi_img/'+(TERM_FILES[t.id]||t.id)+'.jpg';}
+// === 问答 ===
+const QA=[{qz:"惊蛰节气在日本如何被理解和庆祝？",qj:"啓蟄は日本でどのように理解されていますか？",qe:"How is Awakening of Insects understood in Japan?",az:"日本将「啓蟄」视为春耕开始的信号，民间有祈祷丰收的仪式，部分地区会食用「牡丹饼」。",aj:"日本では啓蟄を農耕の準備開始とし、豊作を祈る風習があります。",ae:"In Japan, Keichitsu marks farming preparations with harvest rituals."},{qz:"如何用英文向外国朋友介绍「小满」的哲学？",qj:"「小満」の哲学を英語で説明しますか？",qe:"How to explain 'Grain Buds' philosophy?",az:"小满意寓小得盈满，谦逊知足，是东方中庸智慧的体现——不求满而求适度。",aj:"小満は小さな充足を意味し、東洋の節度の美徳を表します。",ae:"Grain Buds reflects modesty and sufficiency - knowing when enough is enough."},{qz:"清明节的起源和核心习俗是什么？",qj:"清明節の起源と習慣は？",qe:"Origins of Qingming festival?",az:"清明节源于周代，核心是扫墓祭祖与踏青郊游。寒食禁火、插柳戴柳是重要传统。",aj:"清明節は周代に起源。墓参りと春の遠足が中心です。",ae:"Qingming originates from Zhou Dynasty: tomb sweeping and spring outings."}];
+function findAnswer(q,l){q=q.toLowerCase().replace(/[？?的]/g,'');for(let x of QA){if([x.qz.toLowerCase(),x.qj.toLowerCase(),x.qe.toLowerCase()].some(k=>q.includes(k)||k.includes(q)))return l==='jp'?x.aj:l==='en'?x.ae:x.az}if(/^(如何|怎么).*(介绍|解释)/.test(q))return '简洁的跨文化策略：先翻译节气名，再描述物候特征与民俗活动。';if(/^(为什么|为何)/.test(q))return '这是先民在农耕实践中总结的自然节律，融合天文、物候与人文智慧。';return '节气是太阳周年运动在黄道上的24个等分点，反映季节、气候和物候变化。';}
+// === 构建 ===
+const root=document.getElementById('accordionGenesis');
+const fpBar=document.getElementById('footprintBar');
+let RS={};ST.forEach(t=>RS[t.id]={希望:0,思念:0,宁静:0,热烈:0});
+let FP={};ST.forEach(t=>FP[t.id]=false);
+let GR={希望:0,思念:0,宁静:0,热烈:0};
+function buildFP(){fpBar.innerHTML='<span style="font-weight:bold;color:#2d1f0e;white-space:nowrap;">🏮 足迹</span>';const os=['spring','summer','autumn','winter'];const gp={};os.forEach(s=>gp[s]=ST.filter(t=>t.sea===s));const flat=[].concat(...os.map(s=>gp[s]));const cnt=ST.filter(t=>FP[t.id]).length;flat.forEach(t=>{const d=document.createElement('div');d.className='footprint-dot'+(FP[t.id]?' unlocked':'');d.title=t.cn;if(FP[t.id])d.textContent='✓';d.onclick=()=>{document.querySelectorAll('.card-term').forEach(c=>{if(c.dataset.tid===t.id){openCard(c);c.scrollIntoView({behavior:'smooth',block:'center'})}})};fpBar.appendChild(d)});const s=document.createElement('span');s.className='fp-progress-text';s.innerHTML=`${cnt}/24 ${Math.round(cnt/24*100)}%`;fpBar.appendChild(s)}
+function openCard(c){document.querySelectorAll('.card-term.active').forEach(x=>x.classList.remove('active'));c.classList.add('active');const id=c.dataset.tid;if(!FP[id]){FP[id]=true;buildFP()}drawCloud(id)}
+function drawCloud(id){document.querySelectorAll('.detail-panel').forEach(d=>{if(d.dataset.tid!==id)return;const ce=d.querySelector('canvas.cloud-canvas');if(!ce)return;const ctx=ce.getContext('2d');const data=RS[id]||{希望:0,思念:0,宁静:0,热烈:0};ctx.clearRect(0,0,ce.width,ce.height);ctx.fillStyle='#fcf6e8';ctx.fillRect(0,0,ce.width,ce.height);const ems=Object.entries(data).sort((a,b)=>b[1]-a[1]);const tot=ems.reduce((s,[,v])=>s+v,0)||1;const cm={希望:'#3a7a3a',思念:'#7a5a3a',宁静:'#4a6a8a',热烈:'#b04a2a'};const ej={希望:'🌱',思念:'🍃',宁静:'🍂',热烈:'☀️'};let x=15,y=25,lh=0;ems.forEach(([k,v])=>{const f=12+Math.max(0.3,v/tot)*30;ctx.font=`${f}px "KaiTi","Ma Shan Zheng",serif`;ctx.fillStyle=cm[k]||'#6e4f2a';const txt=`${ej[k]}${k} ${v}`,tw=ctx.measureText(txt).width;if(x+tw>ce.width-15){x=15;y+=lh+10;lh=0}ctx.fillText(txt,x,y);x+=tw+12;lh=Math.max(lh,f+3)});ctx.fillStyle='#d4bc90';ctx.font='8px monospace';ctx.textAlign='center';ctx.fillText('✦ 共鸣 ✦',ce.width/2,ce.height-6)})}
+// === 构建卡片 ===
+ST.forEach(t=>{
+  const card=document.createElement('div');card.className='card-term';card.dataset.tid=t.id;
+  const sc={spring:'#7ab648',summer:'#d4a54a',autumn:'#c47030',winter:'#6090b0'};
+  card.style.backgroundImage='url('+termImg(t)+')';card.style.backgroundSize='cover';card.style.backgroundPosition='center 30%';
+  card.style.boxShadow='0 12px 24px rgba(0,0,0,0.4), inset 0 0 0 2px '+(sc[t.sea]||'#b08860');
+  const tv=document.createElement('div');tv.className='title-vertical';tv.textContent=t.cn;
+  const closeBtn=document.createElement('button');closeBtn.className='close-ritual';closeBtn.textContent='✕';
+  const dp=document.createElement('div');dp.className='detail-panel';dp.dataset.tid=t.id;
+  var _ti=termImg(t), _qs=[{x:0,y:0},{x:1,y:0},{x:0,y:1},{x:1,y:1}];dp.innerHTML='<div class="charm-card"><div class="section-legend">📖 三语时令</div><div class="lang-switch-set" data-ls="1"><button class="lang-pill active" data-l="zh">中文</button><button class="lang-pill" data-l="jp">日本語</button><button class="lang-pill" data-l="en">English</button></div><div class="trilingual-box" data-tp="1">'+t.dz+'</div><div class="poem-miniature" data-po="1">✒️ '+t.pz.substring(0,60)+'</div></div><div class="charm-card"><div class="section-legend">🎨 诗画·四格·拼图</div><div class="quad-grid"><div class="quad-img" style="background:url('+_ti+') '+_qs[0].x*100+'% '+_qs[0].y*100+'% / 200% 200%"></div><div class="quad-img" style="background:url('+_ti+') '+_qs[1].x*100+'% '+_qs[1].y*100+'% / 200% 200%"></div><div class="quad-img" style="background:url('+_ti+') '+_qs[2].x*100+'% '+_qs[2].y*100+'% / 200% 200%"></div><div class="quad-img" style="background:url('+_ti+') '+_qs[3].x*100+'% '+_qs[3].y*100+'% / 200% 200%"></div></div></div><div class="charm-card"><div class="section-legend">🧠 灵境问询</div><div class="qa-list-container" data-qb="1"></div><div class="chat-input-row"><input type="text" class="ci" placeholder="输入节气问题"><button class="ca">🗣️ 问</button></div><div class="chat-response" data-cr="1"></div></div><div class="charm-card"><div class="section-legend">💞 情感共鸣</div><div class="emotion-cloud"><button class="emotion-btn" data-e="希望" style="color:#3a7a3a;">🌱 希望</button><button class="emotion-btn" data-e="思念" style="color:#7a5a3a;">🍃 思念</button><button class="emotion-btn" data-e="宁静" style="color:#4a6a8a;">🍂 宁静</button><button class="emotion-btn" data-e="热烈" style="color:#b04a2a;">☀️ 热烈</button></div><div class="cloud-canvas-wrap"><canvas class="cloud-canvas" width="400" height="100"></canvas></div><div class="resonance-hint" data-rh="1">点击情感·谱写共鸣</div></div>';
+  card.appendChild(tv);card.appendChild(closeBtn);card.appendChild(dp);root.appendChild(card);
+  // 事件绑定
+  dp.querySelector('[data-ls]').onclick=e=>{const b=e.target.closest('.lang-pill');if(!b)return;b.parentElement.querySelectorAll('.lang-pill').forEach(x=>x.classList.remove('active'));b.classList.add('active');const l=b.dataset.l,lm={zh:{d:t.dz,p:t.pz},jp:{d:t.dj,p:t.pj},en:{d:t.de,p:t.pe}};dp.querySelector('[data-tp]').textContent=lm[l]?.d||t.dz;dp.querySelector('[data-po]').innerHTML='✒️ '+(lm[l]?.p||t.pz).substring(0,65)};
+  const qb=dp.querySelector('[data-qb]');
+  QA.forEach(qa=>{const qd=document.createElement('div');qd.className='qa-item';qd.innerHTML='<span>❓ '+qa.qz+'</span><span style="color:#b27d48;">▼</span>';const ad=document.createElement('div');ad.className='qa-answer-panel';ad.innerHTML='<strong>📖 中文:</strong> '+qa.az+'<br><strong>🍁 日本語:</strong> '+qa.aj+'<br><strong>🌿 English:</strong> '+qa.ae;qd.onclick=e=>{e.stopPropagation();const v=ad.style.display==='block';qb.querySelectorAll('.qa-answer-panel').forEach(p=>p.style.display='none');ad.style.display=v?'none':'block'};qb.appendChild(qd);qb.appendChild(ad)});
+  dp.querySelector('.ca').onclick=()=>{const inp=dp.querySelector('.ci');const q=inp.value.trim();if(!q)return;const al=dp.querySelector('.lang-pill.active')?.dataset.l||'zh';const ans=findAnswer(q,al);const cr=dp.querySelector('[data-cr]');cr.style.display='block';cr.innerHTML='<div style="color:#7b5e3c;margin-bottom:2px;"><strong>❓ '+q+'</strong></div><div><strong style="color:#b48c48;">'+({zh:'中文',jp:'日本語',en:'English'}[al]||'中文')+'灵境答:</strong> '+ans+'</div>'};
+  dp.querySelector('.ci').onkeydown=e=>{if(e.key==='Enter')dp.querySelector('.ca').click()};
+  dp.querySelector('.emotion-cloud').onclick=e=>{const b=e.target.closest('.emotion-btn');if(!b)return;const emo=b.dataset.e;RS[t.id][emo]=(RS[t.id][emo]||0)+1;GR[emo]=(GR[emo]||0)+1;drawCloud(t.id);dp.querySelector('[data-rh]').textContent='✨ "'+emo+'" 本节气'+RS[t.id][emo]+'人·全站'+GR[emo]+'人'};
+  card.onclick=e=>{if(e.target.closest('.close-ritual')){card.classList.remove('active');AT.stopAll();return}if(e.target.closest('.detail-panel'))return;openCard(card);if(!AT.active)AT.init();AT.setSeason(t.sea)};
+});
+buildFP();
+
+// === 音频系统（古风氛围音）- 点击页面任意处启动 ===
+class AudioTheater{
+  constructor(){this.ctx=null;this.eg=null;this.mg=null;this.tg=null;this.eo=null;this.mo=null;this.active=false;this.season='spring';this.narrLang='zh';}
+  init(){
+    if(!this.ctx)this.ctx=new(window.AudioContext||window.webkitAudioContext)();
+    if(this.ctx.state==='suspended')this.ctx.resume();
+    if(!this.eg){this.eg=this.ctx.createGain();this.eg.gain.value=0.6;this.eg.connect(this.ctx.destination);
+      this.mg=this.ctx.createGain();this.mg.gain.value=0.5;this.mg.connect(this.ctx.destination);
+      this.tg=this.ctx.createGain();this.tg.gain.value=0.8;this.tg.connect(this.ctx.destination);}
+    this.active=true;
+    if(window.console)console.log('🎵 音场已启动',this.season);
+  }
+  setSeason(s){if(s!==this.season){this.season=s;this.update()}}
+  update(){
+    if(!this.active||!this.ctx)return;
+    try{if(this.eo)this.eo.stop();if(this.mo)this.mo.stop()}catch(e){}
+    const bs=this.ctx.sampleRate*2;
+    const b=this.ctx.createBuffer(1,bs,this.ctx.sampleRate);
+    const d=b.getChannelData(0);
+    const bf={spring:200,summer:300,autumn:150,winter:100}[this.season]||200;
+    for(let i=0;i<bs;i++){const t=i/this.ctx.sampleRate;
+      d[i]=Math.sin(2*Math.PI*bf*t)*0.08+Math.sin(2*Math.PI*bf*1.5*t)*0.04+(Math.random()-0.5)*0.02}
+    const es=this.ctx.createBufferSource();es.buffer=b;es.loop=true;es.connect(this.eg);es.start();this.eo=es;
+    const pt={spring:[261,294,330,392,440],summer:[294,330,392,440,523],autumn:[220,261,294,330,392],winter:[174,196,220,261,294]};
+    const ns=pt[this.season]||pt.spring;
+    const mb=this.ctx.createBuffer(1,this.ctx.sampleRate*4,this.ctx.sampleRate);
+    const md=mb.getChannelData(0);
+    for(let i=0;i<md.length;i++){const t=i/this.ctx.sampleRate,ni=Math.floor(t/0.8)%ns.length;
+      md[i]=Math.sin(2*Math.PI*ns[ni]*t)*0.18*Math.max(0,Math.sin(Math.PI*(t%0.8)/0.8))}
+    const ms=this.ctx.createBufferSource();ms.buffer=mb;ms.loop=true;ms.connect(this.mg);ms.start();this.mo=ms;
+  }
+  setEnv(v){if(this.eg)this.eg.gain.value=v}
+  setMus(v){if(this.mg)this.mg.gain.value=v}
+  setTTS(v){if(this.tg)this.tg.gain.value=v}
+  speak(text,lang){
+    if(!this.active)this.init();
+    if(!window.speechSynthesis)return;
+    window.speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang=lang==='jp'?'ja-JP':lang==='en'?'en-GB':'zh-CN';
+    u.rate=0.75;u.pitch=0.9;u.volume=this.tg?this.tg.gain.value:0.6;
+    const vs=window.speechSynthesis.getVoices();
+    const m=vs.find(v=>v.lang.startsWith(u.lang.substring(0,2)));
+    if(m)u.voice=m;
+    window.speechSynthesis.speak(u);
+  }
+  stopAll(){
+    try{if(this.eo)this.eo.stop();if(this.mo)this.mo.stop();if(window.speechSynthesis)window.speechSynthesis.cancel();if(this.ctx&&this.ctx.state!=='closed')this.ctx.suspend()}catch(e){}
+    this.active=false;
+  }
+}
+const AT=new AudioTheater();
+// 音频控制绑定
+['env','mus','tts'].forEach(k=>{
+  const el=document.getElementById(k+'Vol');
+  if(el)el.addEventListener('input',function(){const v=parseFloat(this.value);document.getElementById(k+'Lbl').textContent=Math.round(v*100)+'%';if(k==='env')AT.setEnv(v);else if(k==='mus')AT.setMus(v);else AT.setTTS(v)})
+});
+document.querySelectorAll('[data-narr]').forEach(b=>{b.onclick=()=>{document.querySelectorAll('[data-narr]').forEach(x=>x.classList.remove('active'));b.classList.add('active');AT.narrLang=b.dataset.narr}});
+document.getElementById('playNarration').onclick=()=>{
+  const ac=document.querySelector('.card-term.active');
+  const id=ac?ac.dataset.tid:null;
+  const t=id?ST.find(x=>x.id===id):ST[new Date().getMonth()*2]||ST[0];
+  if(!t)return;
+  if(!AT.active)AT.init();
+  AT.speak(AT.narrLang==='jp'?t.dj:AT.narrLang==='en'?t.de:t.dz,AT.narrLang)
+};
+document.onclick=()=>{if(!AT.active){AT.init();AT.update()}};
+</script>
+</body>
+</html>
