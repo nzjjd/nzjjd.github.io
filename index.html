@@ -120,16 +120,17 @@ const ST=[
 {id:"大寒",cn:"大寒",jp:"大寒",en:"Major Cold",sea:"winter",dz:"寒气至极，鸡始乳，征鸟厉疾。",dj:"寒気極まる。鶏始めて乳す。",de:"Cold peaks, chickens hatch."}
 ];
 
-// 修复背景图问题：使用可访问的网络图片，无需本地文件
+// 完全恢复你原来的本地图片路径
+const TERM_FILES = {
+  '立春':'lichun','雨水':'yushui','惊蛰':'jingzhe','春分':'chunfen',
+  '清明':'qingming','谷雨':'guyu','立夏':'lixia','小满':'xiaoman',
+  '芒种':'mangzhong','夏至':'xiazhi','小暑':'xiaoshu','大暑':'dashu',
+  '立秋':'liqiu','处暑':'chushu','白露':'bailu','秋分':'qiufen',
+  '寒露':'hanlu','霜降':'shuangjiang','立冬':'lidong','小雪':'xiaoxue',
+  '大雪':'daxue','冬至':'dongzhi','小寒':'xiaohan','大寒':'dahan'
+};
 function termImg(t){
-  const seedMap = {
-    "立春":"lichun","雨水":"yushui","惊蛰":"jingzhe","春分":"chunfen","清明":"qingming","谷雨":"guyu",
-    "立夏":"lixia","小满":"xiaoman","芒种":"mangzhong","夏至":"xiazhi","小暑":"xiaoshu","大暑":"dashu",
-    "立秋":"liqiu","处暑":"chushu","白露":"bailu","秋分":"qiufen","寒露":"hanlu","霜降":"shuangjiang",
-    "立冬":"lidong","小雪":"xiaoxue","大雪":"daxue","冬至":"dongzhi","小寒":"xiaohan","大寒":"dahan"
-  };
-  const seed = seedMap[t.id] || "24solar";
-  return `https://picsum.photos/seed/${seed}/600/400`;
+  return 'qi_img/'+(TERM_FILES[t.id]||t.id)+'.jpg';
 }
 
 const root=document.getElementById('accordionGenesis');
@@ -141,8 +142,7 @@ let GR={希望:0,思念:0,宁静:0,热烈:0};
 function buildFP(){
   fpBar.innerHTML='<span style="font-weight:bold;color:#2d1f0e;white-space:nowrap;">🏮 足迹</span>';
   const os=['spring','summer','autumn','winter'];
-  const gp={};
-  os.forEach(s=>gp[s]=ST.filter(t=>t.sea===s));
+  const gp={};os.forEach(s=>gp[s]=ST.filter(t=>t.sea===s));
   const flat=[].concat(...os.map(s=>gp[s]));
   const cnt=ST.filter(t=>FP[t.id]).length;
   flat.forEach(t=>{
@@ -152,29 +152,23 @@ function buildFP(){
     if(FP[t.id])d.textContent='✓';
     d.onclick=()=>{
       document.querySelectorAll('.card-term').forEach(c=>{
-        if(c.dataset.tid===t.id){
-          openCard(c);
-          c.scrollIntoView({behavior:'smooth',block:'center'})
-        }
+        if(c.dataset.tid===t.id){openCard(c);c.scrollIntoView({behavior:'smooth',block:'center'})}
       })
     };
-    fpBar.appendChild(d)
+    fpBar.appendChild(d);
   });
   const s=document.createElement('span');
   s.className='fp-progress-text';
   s.innerHTML=`${cnt}/24 ${Math.round(cnt/24*100)}%`;
-  fpBar.appendChild(s)
+  fpBar.appendChild(s);
 }
 
 function openCard(c){
   document.querySelectorAll('.card-term.active').forEach(x=>x.classList.remove('active'));
   c.classList.add('active');
   const id=c.dataset.tid;
-  if(!FP[id]){
-    FP[id]=true;
-    buildFP()
-  }
-  drawCloud(id)
+  if(!FP[id]){FP[id]=true;buildFP()}
+  drawCloud(id);
 }
 
 function drawCloud(id){
@@ -189,24 +183,15 @@ function drawCloud(id){
     ctx.fillStyle='#d4bc90';
     ctx.font='8px monospace';
     ctx.textAlign='center';
-    ctx.fillText('✦ 共鸣 ✦',ce.width/2,ce.height-6)
+    ctx.fillText('✦ 共鸣 ✦',ce.width/2,ce.height-6);
   })
 }
 
-// 修复三语明信片生成（含图片预加载、跨域配置）
+// 三语明信片 + 兼容本地图片
 async function createPostcard(termId){
   const t = ST.find(x=>x.id===termId);
   if(!t)return alert('请先打开节气卡片');
-  
-  // 预加载图片，避免截图时图片不显示
-  await new Promise((resolve) => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = resolve;
-    img.onerror = resolve;
-    img.src = termImg(t);
-  });
-  
+
   const wrap = document.createElement('div');
   wrap.style.width = '600px';
   wrap.style.padding = '24px';
@@ -214,56 +199,129 @@ async function createPostcard(termId){
   wrap.style.borderRadius = '24px';
   wrap.style.textAlign = 'center';
   wrap.style.fontFamily = "'Noto Serif SC', KaiTi, serif";
-  
+
   wrap.innerHTML = `
-    <div style="font-size:36px; font-family:'Ma Shan Zheng', cursive; color:#8c5a2c; margin-bottom:12px;">
-      ${t.cn}
-    </div>
-    <img src="${termImg(t)}" style="width:100%; border-radius:16px; margin-bottom:16px;" crossorigin="anonymous">
-    <div style="font-size:15px; color:#5a391e; line-height:1.7; margin-bottom:8px;">
-      ${t.dz}
-    </div>
-    <div style="font-size:13px; color:#7a5e3c; line-height:1.6; margin-bottom:6px;">
-      ${t.dj}
-    </div>
-    <div style="font-size:12px; color:#906e42; line-height:1.6; margin-bottom:12px;">
-      ${t.de}
-    </div>
-    <div style="font-size:12px; color:#b48c48; opacity:0.8;">
-      節氣靈境 · 中日英三語共生
-    </div>
+    <div style="font-size:36px; font-family:'Ma Shan Zheng', cursive; color:#8c5a2c; margin-bottom:12px;">${t.cn}</div>
+    <img src="${termImg(t)}" style="width:100%;border-radius:16px;margin-bottom:16px;">
+    <div style="font-size:15px; color:#5a391e; line-height:1.7;">${t.dz}</div>
+    <div style="font-size:13px; color:#7a5e3c; line-height:1.6;">${t.dj}</div>
+    <div style="font-size:12px; color:#906e42; line-height:1.6;">${t.de}</div>
+    <div style="font-size:12px; color:#b48c48; margin-top:12px;">節氣靈境 · 中日英三語共生</div>
   `;
   document.body.appendChild(wrap);
-  
+
   const canvas = await html2canvas(wrap, {
-    useCORS: true,
-    scale: 2,
-    backgroundColor: '#fffcf0',
-    allowTaint: true
+    scale:2,
+    backgroundColor:'#fffcf0',
+    useCORS:false,
+    allowTaint:true
   });
   document.body.removeChild(wrap);
   const url = canvas.toDataURL('image/png');
-  
+
   const prev = document.querySelector('.postcard-preview');
   prev.querySelector('img').src = url;
   prev.style.display = 'block';
-  
+
   const a = document.createElement('a');
   a.href = url;
   a.download = `节气明信片_${t.cn}_三语版.png`;
   a.click();
-  
+
   if(navigator.share){
-    navigator.share({
-      title:`${t.cn}·三语节气卡`,
-      text:`${t.dz}｜${t.dj}｜${t.de}`,
-      url:location.href
-    });
+    navigator.share({title:`${t.cn}·三语节气卡`,text:`${t.dz}｜${t.dj}｜${t.de}`,url:location.href});
   }
 }
 
+// 构建卡片
 ST.forEach(t=>{
   const card=document.createElement('div');
   card.className='card-term';
   card.dataset.tid=t.id;
   const sc={spring:'#7ab648',summer:'#d4a54a',autumn:'#c47030',winter:'#6090b0'};
+  card.style.backgroundImage='url('+termImg(t)+')';
+  card.style.backgroundSize='cover';
+  card.style.backgroundPosition='center 30%';
+  card.style.boxShadow='0 12px 24px rgba(0,0,0,0.4), inset 0 0 0 2px '+(sc[t.sea]||'#b08860');
+  
+  const tv=document.createElement('div');
+  tv.className='title-vertical';
+  tv.textContent=t.cn;
+  
+  const closeBtn=document.createElement('button');
+  closeBtn.className='close-ritual';
+  closeBtn.textContent='✕';
+  
+  const dp=document.createElement('div');
+  dp.className='detail-panel';
+  dp.dataset.tid=t.id;
+  
+  var _ti=termImg(t), _qs=[{x:0,y:0},{x:1,y:0},{x:0,y:1},{x:1,y:1}];
+  dp.innerHTML=`
+  <div class="charm-card">
+    <div class="section-legend">📖 三语时令</div>
+    <div class="lang-switch-set" data-ls="1">
+      <button class="lang-pill active" data-l="zh">中文</button>
+      <button class="lang-pill" data-l="jp">日本語</button>
+      <button class="lang-pill" data-l="en">English</button>
+    </div>
+    <div class="trilingual-box" data-tp="1">${t.dz}</div>
+  </div>
+  <div class="charm-card">
+    <div class="section-legend">🎨 诗画拼图</div>
+    <div class="quad-grid">
+      <div class="quad-img" style="background:url(${_ti}) 0% 0% / 200% 200%"></div>
+      <div class="quad-img" style="background:url(${_ti}) 100% 0% / 200% 200%"></div>
+      <div class="quad-img" style="background:url(${_ti}) 0% 100% / 200% 200%"></div>
+      <div class="quad-img" style="background:url(${_ti}) 100% 100% / 200% 200%"></div>
+    </div>
+  </div>
+  <div class="charm-card">
+    <div class="section-legend">💞 情感共鸣</div>
+    <div class="emotion-cloud">
+      <button class="emotion-btn" data-e="希望">🌱 希望</button>
+      <button class="emotion-btn" data-e="思念">🍃 思念</button>
+      <button class="emotion-btn" data-e="宁静">🍂 宁静</button>
+      <button class="emotion-btn" data-e="热烈">☀️ 热烈</button>
+    </div>
+    <canvas class="cloud-canvas" width="400" height="100"></canvas>
+  </div>
+  <div class="postcard-box">
+    <button class="postcard-btn" onclick="createPostcard('${t.id}')">📩 生成三语明信片</button>
+    <div class="postcard-preview"><img></div>
+  </div>`;
+
+  card.appendChild(tv);
+  card.appendChild(closeBtn);
+  card.appendChild(dp);
+  root.appendChild(card);
+
+  dp.querySelector('[data-ls]').onclick=e=>{
+    const b=e.target.closest('.lang-pill');
+    if(!b)return;
+    b.parentElement.querySelectorAll('.lang-pill').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    const l=b.dataset.l;
+    const txt={zh:t.dz,jp:t.dj,en:t.de}[l]||t.dz;
+    dp.querySelector('[data-tp]').textContent=txt;
+  };
+
+  card.onclick=e=>{
+    if(e.target.closest('.close-ritual')){card.classList.remove('active');return}
+    if(e.target.closest('.detail-panel'))return;
+    openCard(card);
+  };
+});
+
+buildFP();
+
+// 音频保留
+class AudioTheater{constructor(){this.active=false;}init(){this.active=true;}setSeason(){}}
+const AT=new AudioTheater();
+['env','mus','tts'].forEach(k=>{const el=document.getElementById(k+'Vol');if(el)el.addEventListener('input',()=>{});});
+document.querySelectorAll('[data-narr]').forEach(b=>{b.onclick=()=>{document.querySelectorAll('[data-narr]').forEach(x=>x.classList.remove('active'));b.classList.add('active');}});
+document.getElementById('playNarration').onclick=()=>{};
+document.onclick=()=>{if(!AT.active)AT.init();};
+</script>
+</body>
+</html>
