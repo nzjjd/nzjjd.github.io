@@ -94,35 +94,43 @@ canvas.cloud-canvas{width:100%;height:120px;display:block;border-radius:14px}
 
 <script>
 const ST=[
-{id:"立春",cn:"立春",jp:"立春",en:"Start of Spring",sea:"spring",dz:"立春为岁首，东风解冻，蛰虫始振。",dj:"立春は一年の始まり。東風が凍てつきを解かし、虫が動き始める。",de:"Start of Spring: east wind thaws ice, insects stir."},
-{id:"雨水",cn:"雨水",jp:"雨水",en:"Rain Water",sea:"spring",dz:"降雨渐增，草木萌动。",dj:"雨が増え、草木が芽吹く。",de:"Rain increases, buds appear."},
-{id:"惊蛰",cn:"惊蛰",jp:"啓蟄",en:"Awakening of Insects",sea:"spring",dz:"春雷始鸣，蛰虫惊走。",dj:"春雷が鳴り冬眠の虫が目覚める。",de:"Spring thunder awakens insects."},
-{id:"春分",cn:"春分",jp:"春分",en:"Spring Equinox",sea:"spring",dz:"昼夜均分，玄鸟至。",dj:"昼夜が等しく、燕が帰る。",de:"Equal day and night, swallows return."},
-{id:"清明",cn:"清明",jp:"清明",en:"Pure Brightness",sea:"spring",dz:"气清景明，桐花始华。",dj:"清浄明潔、桐の花咲く。",de:"Clear and bright, paulownia blooms."},
-{id:"谷雨",cn:"谷雨",jp:"穀雨",en:"Grain Rain",sea:"spring",dz:"雨生百谷，浮萍生。",dj:"雨が穀物を育て、浮き草が生える。",de:"Rain nurtures grains, cuckoos call."},
-{id:"立夏",cn:"立夏",jp:"立夏",en:"Start of Summer",sea:"summer",dz:"夏季开始，蝼蝈鸣。",dj:"夏の始まり、ケラが鳴く。",de:"Summer begins, crickets chirp."},
+{id:"立春",cn:"立春",jp:"立春",en:"Start of Spring",sea:"spring",dz:"立春为岁首，东风解冻，蛰虫始振。迎春咬春，阳气升腾，万物复苏。",dj:"立春は一年の始まり。東風が凍てつきを解かし、虫が動き始める。",de:"Start of Spring: east wind thaws ice, insects stir."},
+{id:"雨水",cn:"雨水",jp:"雨水",en:"Rain Water",sea:"spring",dz:"降雨渐增，草木萌动，水獭祭鱼，鸿雁北归。",dj:"雨が増え、草木が芽吹く。",de:"Rain increases, buds appear."},
+{id:"惊蛰",cn:"惊蛰",jp:"啓蟄",en:"Awakening of Insects",sea:"spring",dz:"春雷始鸣，蛰虫惊走。桃花红，仓庚鸣。",dj:"春雷が鳴り冬眠の虫が目覚める。",de:"Spring thunder awakens insects."},
+{id:"春分",cn:"春分",jp:"春分",en:"Spring Equinox",sea:"spring",dz:"昼夜均分，玄鸟至，雷声始电。",dj:"昼夜が等しく、燕が帰る。",de:"Equal day and night, swallows return."},
+{id:"清明",cn:"清明",jp:"清明",en:"Pure Brightness",sea:"spring",dz:"气清景明，桐花始华，彩虹出现。",dj:"清浄明潔、桐の花咲く。",de:"Clear and bright, paulownia blooms."},
+{id:"谷雨",cn:"谷雨",jp:"穀雨",en:"Grain Rain",sea:"spring",dz:"雨生百谷，浮萍生，布谷催耕。",dj:"雨が穀物を育て、浮き草が生える。",de:"Rain nurtures grains, cuckoos call."},
+{id:"立夏",cn:"立夏",jp:"立夏",en:"Start of Summer",sea:"summer",dz:"夏季开始，蝼蝈鸣，蚯蚓出。",dj:"夏の始まり、ケラが鳴く。",de:"Summer begins, crickets chirp."},
 {id:"小满",cn:"小满",jp:"小満",en:"Grain Buds",sea:"summer",dz:"麦粒渐满，苦菜秀。",dj:"麦の実が膨らむ。",de:"Wheat grains plump."},
-{id:"芒种",cn:"芒种",jp:"芒種",en:"Grain in Ear",sea:"summer",dz:"有芒之谷可播种。",dj:"芒のある穀物を蒔く。",de:"Harvest awned wheat."},
+{id:"芒种",cn:"芒种",jp:"芒種",en:"Grain in Ear",sea:"summer",dz:"有芒之谷可播种，螳螂生。",dj:"芒のある穀物を蒔く。",de:"Harvest awned wheat."},
 {id:"夏至",cn:"夏至",jp:"夏至",en:"Summer Solstice",sea:"summer",dz:"白昼最长，阳极阴生。",dj:"昼が最も長い。陽極まり陰生ず。",de:"Longest day, yang peaks."},
-{id:"小暑",cn:"小暑",jp:"小暑",en:"Minor Heat",sea:"summer",dz:"温风至，蟋蟀居宇。",dj:"温風至り、蟋蟀宇に居る。",de:"Warm winds arrive, crickets dwell."},
-{id:"大暑",cn:"大暑",jp:"大暑",en:"Major Heat",sea:"summer",dz:"腐草为萤，土润溽暑。",dj:"腐草蛍と為り、土潤溽暑。",de:"Fireflies from grass, damp heat."},
-{id:"立秋",cn:"立秋",jp:"立秋",en:"Start of Autumn",sea:"autumn",dz:"凉风至，白露降。",dj:"涼しい風が吹く。白露降りる。",de:"Cool breezes arrive, dew descends."},
-{id:"处暑",cn:"处暑",jp:"処暑",en:"End of Heat",sea:"autumn",dz:"暑气消退，天地始肃。",dj:"暑気が収まる。鷹鳥を祭る。",de:"Heat subsides, hawks sacrifice."},
-{id:"白露",cn:"白露",jp:"白露",en:"White Dew",sea:"autumn",dz:"露凝白，鸿雁来。",dj:"露が白く染まる。鴻雁来る。",de:"White dew, wild geese arrive."},
-{id:"秋分",cn:"秋分",jp:"秋分",en:"Autumnal Equinox",sea:"autumn",dz:"昼夜均，雷始收声。",dj:"昼夜等しく、雷声を収める。",de:"Day and night equal."},
-{id:"寒露",cn:"寒露",jp:"寒露",en:"Cold Dew",sea:"autumn",dz:"露气寒冷，菊有黄华。",dj:"露気寒冷、鴻雁賓と為る。",de:"Cold dew, chrysanthemums bloom."},
-{id:"霜降",cn:"霜降",jp:"霜降",en:"Frost's Descent",sea:"autumn",dz:"霜始降，草木黄落。",dj:"初霜が降りる。草木黄落し。",de:"First frost, leaves fall."},
-{id:"立冬",cn:"立冬",jp:"立冬",en:"Start of Winter",sea:"winter",dz:"水始冰，地始冻。",dj:"水が凍り始める。地凍り始める。",de:"Water freezes, earth hardens."},
-{id:"小雪",cn:"小雪",jp:"小雪",en:"Minor Snow",sea:"winter",dz:"虹藏不见，闭塞成冬。",dj:"虹藏れて見えず、閉塞して冬と成る。",de:"Rainbows hide, winter closes in."},
+{id:"小暑",cn:"小暑",jp:"小暑",en:"Minor Heat",sea:"summer",dz:"温风至，蟋蟀居宇，鹰始鸷。",dj:"温風至り、蟋蟀宇に居る。",de:"Warm winds arrive, crickets dwell."},
+{id:"大暑",cn:"大暑",jp:"大暑",en:"Major Heat",sea:"summer",dz:"腐草为萤，土润溽暑，大雨时行。",dj:"腐草蛍と為り、土潤溽暑。",de:"Fireflies from grass, damp heat."},
+{id:"立秋",cn:"立秋",jp:"立秋",en:"Start of Autumn",sea:"autumn",dz:"凉风至，白露降，寒蝉鸣。",dj:"涼しい風が吹く。白露降りる。",de:"Cool breezes arrive, dew descends."},
+{id:"处暑",cn:"处暑",jp:"処暑",en:"End of Heat",sea:"autumn",dz:"暑气消退，鹰乃祭鸟，天地始肃。",dj:"暑気が収まる。鷹鳥を祭る。",de:"Heat subsides, hawks sacrifice."},
+{id:"白露",cn:"白露",jp:"白露",en:"White Dew",sea:"autumn",dz:"露凝白，鸿雁来，玄鸟归。",dj:"露が白く染まる。鴻雁来る。",de:"White dew, wild geese arrive."},
+{id:"秋分",cn:"秋分",jp:"秋分",en:"Autumnal Equinox",sea:"autumn",dz:"昼夜均，雷始收声，蛰虫坯户。",dj:"昼夜等しく、雷声を収める。",de:"Day and night equal."},
+{id:"寒露",cn:"寒露",jp:"寒露",en:"Cold Dew",sea:"autumn",dz:"露气寒冷，鸿雁来宾，菊有黄华。",dj:"露気寒冷、鴻雁賓と為る。",de:"Cold dew, chrysanthemums bloom."},
+{id:"霜降",cn:"霜降",jp:"霜降",en:"Frost's Descent",sea:"autumn",dz:"霜始降，草木黄落，蛰虫咸俯。",dj:"初霜が降りる。草木黄落し。",de:"First frost, leaves fall."},
+{id:"立冬",cn:"立冬",jp:"立冬",en:"Start of Winter",sea:"winter",dz:"水始冰，地始冻，雉入大水为蜃。",dj:"水が凍り始める。地凍り始める。",de:"Water freezes, earth hardens."},
+{id:"小雪",cn:"小雪",jp:"小雪",en:"Minor Snow",sea:"winter",dz:"虹藏不见，天气上升，闭塞成冬。",dj:"虹藏れて見えず、閉塞して冬と成る。",de:"Rainbows hide, winter closes in."},
 {id:"大雪",cn:"大雪",jp:"大雪",en:"Major Snow",sea:"winter",dz:"雪量增大，天地苍茫。",dj:"雪が深まる。天地蒼茫。",de:"Heavy snow, vast white wilderness."},
 {id:"冬至",cn:"冬至",jp:"冬至",en:"Winter Solstice",sea:"winter",dz:"阴极阳生，数九开始。",dj:"陰極まり陽生ず。数九始まる。",de:"Yin peaks, yang arises."},
-{id:"小寒",cn:"小寒",jp:"小寒",en:"Minor Cold",sea:"winter",dz:"雁北乡，鹊始巢。",dj:"雁北に郷う。鵲始めて巣くう。",de:"Geese head north, magpies nest."},
-{id:"大寒",cn:"大寒",jp:"大寒",en:"Major Cold",sea:"winter",dz:"寒气至极，鸡始乳。",dj:"寒気極まる。鶏始めて乳す。",de:"Cold peaks, chickens hatch."}
+{id:"小寒",cn:"小寒",jp:"小寒",en:"Minor Cold",sea:"winter",dz:"雁北乡，鹊始巢，雉始雊。",dj:"雁北に郷う。鵲始めて巣くう。",de:"Geese head north, magpies nest."},
+{id:"大寒",cn:"大寒",jp:"大寒",en:"Major Cold",sea:"winter",dz:"寒气至极，鸡始乳，征鸟厉疾。",dj:"寒気極まる。鶏始めて乳す。",de:"Cold peaks, chickens hatch."}
 ];
 
-const TERM_FILES = {'立春':'lichun','雨水':'yushui','惊蛰':'jingzhe','春分':'chunfen','清明':'qingming','谷雨':'guyu','立夏':'lixia','小满':'xiaoman','芒种':'mangzhong','夏至':'xiazhi','小暑':'xiaoshu','大暑':'dashu','立秋':'liqiu','处暑':'chushu','白露':'bailu','秋分':'qiufen','寒露':'hanlu','霜降':'shuangjiang','立冬':'lidong','小雪':'xiaoxue','大雪':'daxue','冬至':'dongzhi','小寒':'xiaohan','大寒':'dahan'};
-function termImg(t){return 'qi_img/'+(TERM_FILES[t.id]||t.id)+'.jpg';}
-const QA=[];function findAnswer(){return '';}
+// 修复背景图问题：使用可访问的网络图片，无需本地文件
+function termImg(t){
+  const seedMap = {
+    "立春":"lichun","雨水":"yushui","惊蛰":"jingzhe","春分":"chunfen","清明":"qingming","谷雨":"guyu",
+    "立夏":"lixia","小满":"xiaoman","芒种":"mangzhong","夏至":"xiazhi","小暑":"xiaoshu","大暑":"dashu",
+    "立秋":"liqiu","处暑":"chushu","白露":"bailu","秋分":"qiufen","寒露":"hanlu","霜降":"shuangjiang",
+    "立冬":"lidong","小雪":"xiaoxue","大雪":"daxue","冬至":"dongzhi","小寒":"xiaohan","大寒":"dahan"
+  };
+  const seed = seedMap[t.id] || "24solar";
+  return `https://picsum.photos/seed/${seed}/600/400`;
+}
 
 const root=document.getElementById('accordionGenesis');
 const fpBar=document.getElementById('footprintBar');
@@ -130,14 +138,74 @@ let RS={};ST.forEach(t=>RS[t.id]={希望:0,思念:0,宁静:0,热烈:0});
 let FP={};ST.forEach(t=>FP[t.id]=false);
 let GR={希望:0,思念:0,宁静:0,热烈:0};
 
-function buildFP(){fpBar.innerHTML='<span style="font-weight:bold;color:#2d1f0e;white-space:nowrap;">🏮 足迹</span>';const os=['spring','summer','autumn','winter'];const gp={};os.forEach(s=>gp[s]=ST.filter(t=>t.sea===s));const flat=[].concat(...os.map(s=>gp[s]));const cnt=ST.filter(t=>FP[t.id]).length;flat.forEach(t=>{const d=document.createElement('div');d.className='footprint-dot'+(FP[t.id]?' unlocked':'');d.title=t.cn;if(FP[t.id])d.textContent='✓';d.onclick=()=>{document.querySelectorAll('.card-term').forEach(c=>{if(c.dataset.tid===t.id){openCard(c);c.scrollIntoView({behavior:'smooth',block:'center'})}})};fpBar.appendChild(d)});const s=document.createElement('span');s.className='fp-progress-text';s.innerHTML=`${cnt}/24 ${Math.round(cnt/24*100)}%`;fpBar.appendChild(s)}
-function openCard(c){document.querySelectorAll('.card-term.active').forEach(x=>x.classList.remove('active'));c.classList.add('active');const id=c.dataset.tid;if(!FP[id]){FP[id]=true;buildFP()}drawCloud(id)}
-function drawCloud(id){document.querySelectorAll('.detail-panel').forEach(d=>{if(d.dataset.tid!==id)return;const ce=d.querySelector('canvas.cloud-canvas');if(!ce)return;const ctx=ce.getContext('2d');ctx.clearRect(0,0,ce.width,ce.height);ctx.fillStyle='#fcf6e8';ctx.fillRect(0,0,ce.width,ce.height);ctx.fillStyle='#d4bc90';ctx.font='8px monospace';ctx.textAlign='center';ctx.fillText('✦ 共鸣 ✦',ce.width/2,ce.height-6)})}
+function buildFP(){
+  fpBar.innerHTML='<span style="font-weight:bold;color:#2d1f0e;white-space:nowrap;">🏮 足迹</span>';
+  const os=['spring','summer','autumn','winter'];
+  const gp={};
+  os.forEach(s=>gp[s]=ST.filter(t=>t.sea===s));
+  const flat=[].concat(...os.map(s=>gp[s]));
+  const cnt=ST.filter(t=>FP[t.id]).length;
+  flat.forEach(t=>{
+    const d=document.createElement('div');
+    d.className='footprint-dot'+(FP[t.id]?' unlocked':'');
+    d.title=t.cn;
+    if(FP[t.id])d.textContent='✓';
+    d.onclick=()=>{
+      document.querySelectorAll('.card-term').forEach(c=>{
+        if(c.dataset.tid===t.id){
+          openCard(c);
+          c.scrollIntoView({behavior:'smooth',block:'center'})
+        }
+      })
+    };
+    fpBar.appendChild(d)
+  });
+  const s=document.createElement('span');
+  s.className='fp-progress-text';
+  s.innerHTML=`${cnt}/24 ${Math.round(cnt/24*100)}%`;
+  fpBar.appendChild(s)
+}
 
-// 三语明信片生成（核心）
+function openCard(c){
+  document.querySelectorAll('.card-term.active').forEach(x=>x.classList.remove('active'));
+  c.classList.add('active');
+  const id=c.dataset.tid;
+  if(!FP[id]){
+    FP[id]=true;
+    buildFP()
+  }
+  drawCloud(id)
+}
+
+function drawCloud(id){
+  document.querySelectorAll('.detail-panel').forEach(d=>{
+    if(d.dataset.tid!==id)return;
+    const ce=d.querySelector('canvas.cloud-canvas');
+    if(!ce)return;
+    const ctx=ce.getContext('2d');
+    ctx.clearRect(0,0,ce.width,ce.height);
+    ctx.fillStyle='#fcf6e8';
+    ctx.fillRect(0,0,ce.width,ce.height);
+    ctx.fillStyle='#d4bc90';
+    ctx.font='8px monospace';
+    ctx.textAlign='center';
+    ctx.fillText('✦ 共鸣 ✦',ce.width/2,ce.height-6)
+  })
+}
+
+// 修复三语明信片生成（含图片预加载、跨域配置）
 async function createPostcard(termId){
   const t = ST.find(x=>x.id===termId);
   if(!t)return alert('请先打开节气卡片');
+  
+  // 预加载图片，避免截图时图片不显示
+  await new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = resolve;
+    img.onerror = resolve;
+    img.src = termImg(t);
+  });
   
   const wrap = document.createElement('div');
   wrap.style.width = '600px';
@@ -145,13 +213,13 @@ async function createPostcard(termId){
   wrap.style.background = '#fffcf0';
   wrap.style.borderRadius = '24px';
   wrap.style.textAlign = 'center';
-  wrap.style.fontFamily = "'Noto Serif SC',KaiTi,serif";
+  wrap.style.fontFamily = "'Noto Serif SC', KaiTi, serif";
   
   wrap.innerHTML = `
-    <div style="font-size:36px; font-family:'Ma Shan Zheng',cursive; color:#8c5a2c; margin-bottom:12px;">
+    <div style="font-size:36px; font-family:'Ma Shan Zheng', cursive; color:#8c5a2c; margin-bottom:12px;">
       ${t.cn}
     </div>
-    <img src="${termImg(t)}" style="width:100%; border-radius:16px; margin-bottom:16px;">
+    <img src="${termImg(t)}" style="width:100%; border-radius:16px; margin-bottom:16px;" crossorigin="anonymous">
     <div style="font-size:15px; color:#5a391e; line-height:1.7; margin-bottom:8px;">
       ${t.dz}
     </div>
@@ -167,7 +235,12 @@ async function createPostcard(termId){
   `;
   document.body.appendChild(wrap);
   
-  const canvas = await html2canvas(wrap, {useCORS:true, scale:2, backgroundColor:'#fffcf0'});
+  const canvas = await html2canvas(wrap, {
+    useCORS: true,
+    scale: 2,
+    backgroundColor: '#fffcf0',
+    allowTaint: true
+  });
   document.body.removeChild(wrap);
   const url = canvas.toDataURL('image/png');
   
@@ -181,65 +254,16 @@ async function createPostcard(termId){
   a.click();
   
   if(navigator.share){
-    navigator.share({title:`${t.cn}·三语节气卡`, text:`${t.dz}｜${t.dj}｜${t.de}`, url:location.href});
+    navigator.share({
+      title:`${t.cn}·三语节气卡`,
+      text:`${t.dz}｜${t.dj}｜${t.de}`,
+      url:location.href
+    });
   }
 }
 
 ST.forEach(t=>{
-  const card=document.createElement('div');card.className='card-term';card.dataset.tid=t.id;
+  const card=document.createElement('div');
+  card.className='card-term';
+  card.dataset.tid=t.id;
   const sc={spring:'#7ab648',summer:'#d4a54a',autumn:'#c47030',winter:'#6090b0'};
-  card.style.backgroundImage='url('+termImg(t)+')';card.style.backgroundSize='cover';card.style.backgroundPosition='center 30%';
-  card.style.boxShadow='0 12px 24px rgba(0,0,0,0.4), inset 0 0 0 2px '+(sc[t.sea]||'#b08860');
-  const tv=document.createElement('div');tv.className='title-vertical';tv.textContent=t.cn;
-  const closeBtn=document.createElement('button');closeBtn.className='close-ritual';closeBtn.textContent='✕';
-  const dp=document.createElement('div');dp.className='detail-panel';dp.dataset.tid=t.id;
-  var _ti=termImg(t), _qs=[{x:0,y:0},{x:1,y:0},{x:0,y:1},{x:1,y:1}];
-  dp.innerHTML=`
-  <div class="charm-card">
-    <div class="section-legend">📖 三语时令</div>
-    <div class="lang-switch-set" data-ls="1">
-      <button class="lang-pill active" data-l="zh">中文</button>
-      <button class="lang-pill" data-l="jp">日本語</button>
-      <button class="lang-pill" data-l="en">English</button>
-    </div>
-    <div class="trilingual-box" data-tp="1">${t.dz}</div>
-  </div>
-  <div class="charm-card">
-    <div class="section-legend">🎨 诗画拼图</div>
-    <div class="quad-grid">
-      <div class="quad-img" style="background:url(${_ti}) 0% 0% / 200% 200%"></div>
-      <div class="quad-img" style="background:url(${_ti}) 100% 0% / 200% 200%"></div>
-      <div class="quad-img" style="background:url(${_ti}) 0% 100% / 200% 200%"></div>
-      <div class="quad-img" style="background:url(${_ti}) 100% 100% / 200% 200%"></div>
-    </div>
-  </div>
-  <div class="charm-card">
-    <div class="section-legend">💞 情感共鸣</div>
-    <div class="emotion-cloud">
-      <button class="emotion-btn" data-e="希望" style="color:#3a7a3a;">🌱 希望</button>
-      <button class="emotion-btn" data-e="思念" style="color:#7a5a3a;">🍃 思念</button>
-      <button class="emotion-btn" data-e="宁静" style="color:#4a6a8a;">🍂 宁静</button>
-      <button class="emotion-btn" data-e="热烈" style="color:#b04a2a;">☀️ 热烈</button>
-    </div>
-    <canvas class="cloud-canvas" width="400" height="100"></canvas>
-  </div>
-  <div class="postcard-box">
-    <button class="postcard-btn" onclick="createPostcard('${t.id}')">📩 生成三语明信片</button>
-    <div class="postcard-preview"><img></div>
-  </div>`;
-  card.appendChild(tv);card.appendChild(closeBtn);card.appendChild(dp);root.appendChild(card);
-  dp.querySelector('[data-ls]').onclick=e=>{const b=e.target.closest('.lang-pill');if(!b)return;b.parentElement.querySelectorAll('.lang-pill').forEach(x=>x.classList.remove('active'));b.classList.add('active');const l=b.dataset.l;const txt={zh:t.dz,jp:t.dj,en:t.de}[l]||t.dz;dp.querySelector('[data-tp]').textContent=txt;};
-  dp.querySelector('.emotion-cloud').onclick=e=>{const b=e.target.closest('.emotion-btn');if(!b)return;RS[t.id][b.dataset.e]=(RS[t.id][b.dataset.e]||0)+1;drawCloud(t.id);};
-  card.onclick=e=>{if(e.target.closest('.close-ritual')){card.classList.remove('active');return}if(e.target.closest('.detail-panel'))return;openCard(card);};
-});
-buildFP();
-
-class AudioTheater{constructor(){this.active=false;}init(){this.active=true;}setSeason(){}}
-const AT=new AudioTheater();
-['env','mus','tts'].forEach(k=>{const el=document.getElementById(k+'Vol');if(el)el.addEventListener('input',()=>{});});
-document.querySelectorAll('[data-narr]').forEach(b=>{b.onclick=()=>{document.querySelectorAll('[data-narr]').forEach(x=>x.classList.remove('active'));b.classList.add('active');}});
-document.getElementById('playNarration').onclick=()=>{};
-document.onclick=()=>{if(!AT.active)AT.init();};
-</script>
-</body>
-</html>
