@@ -115,7 +115,6 @@ const ST=[
   {id:"小寒",cn:"小寒",jp:"小寒",en:"Minor Cold",sea:"winter",dz:"雁北乡，鹊始巢，雉始雊。",dj:"雁北に郷う。鵲始めて巣くう。",de:"Geese head north, magpies nest.",pz:"江雨蒙蒙作小寒，雪飘五老发毛斑。城中咫尺云横栈，独立前山望后山。",pj:"江雨蒙蒙小寒を作す",pe:"River rain in Minor Cold."},
   {id:"大寒",cn:"大寒",jp:"大寒",en:"Major Cold",sea:"winter",dz:"寒气至极，鸡始乳，征鸟厉疾。",dj:"寒気極まる。鶏始めて乳す。",de:"Cold peaks, chickens hatch.",pz:"大寒雪未消，闭户不能出。可怜切云冠，局此容膝室。",pj:"大寒雪未だ消えず",pe:"Major Cold, snow lingers."}
 ];
-// === 固定图片 ===
 const TERM_FILES = {
   '立春':'lichun','雨水':'yushui','惊蛰':'jingzhe','春分':'chunfen',
   '清明':'qingming','谷雨':'guyu','立夏':'lixia','小满':'xiaoman',
@@ -124,11 +123,13 @@ const TERM_FILES = {
   '寒露':'hanlu','霜降':'shuangjiang','立冬':'lidong','小雪':'xiaoxue',
   '大雪':'daxue','冬至':'dongzhi','小寒':'xiaohan','大寒':'dahan'
 };
-function termImg(t){return 'qi_img/'+(TERM_FILES[t.id]||t.id)+'.jpg';}
-// === 问答 ===
-const QA=[{qz:"惊蛰节气在日本如何被理解和庆祝？",qj:"啓蟄は日本でどのように理解されていますか？",qe:"How is Awakening of Insects understood in Japan?",az:"日本将「啓蟄」视为春耕开始的信号，民间有祈祷丰收的仪式，部分地区会食用「牡丹饼」。",aj:"日本では啓蟄を農耕の準備開始とし、豊作を祈る風習があります。",ae:"In Japan, Keichitsu marks farming preparations with harvest rituals."},{qz:"如何用英文向外国朋友介绍「小满」的哲学？",qj:"「小満」の哲学を英語で説明しますか？",qe:"How to explain 'Grain Buds' philosophy?",az:"小满意寓小得盈满，谦逊知足，是东方中庸智慧的体现——不求满而求适度。",aj:"小満は小さな充足を意味し、東洋の節度の美徳を表します。",ae:"Grain Buds reflects modesty and sufficiency - knowing when enough is enough."},{qz:"清明节的起源和核心习俗是什么？",qj:"清明節の起源と習慣は？",qe:"Origins of Qingming festival?",az:"清明节源于周代，核心是扫墓祭祖与踏青郊游。寒食禁火、插柳戴柳是重要传统。",aj:"清明節は周代に起源。墓参りと春の遠足が中心です。",ae:"Qingming originates from Zhou Dynasty: tomb sweeping and spring outings."}];
+function termImg(t){return (TERM_FILES[t.id]||t.id)+'.jpg';}
+const QA=[
+  {qz:"惊蛰节气在日本如何被理解和庆祝？",qj:"啓蟄は日本でどのように理解されていますか？",qe:"How is Awakening of Insects understood in Japan?",az:"日本将「啓蟄」视为春耕开始的信号，民间有祈祷丰收的仪式，部分地区会食用「牡丹饼」。",aj:"日本では啓蟄を農耕の準備開始とし、豊作を祈る風習があります。",ae:"In Japan, Keichitsu marks farming preparations with harvest rituals."},
+  {qz:"如何用英文向外国朋友介绍「小满」的哲学？",qj:"「小満」の哲学を英語で説明しますか？",qe:"How to explain 'Grain Buds' philosophy?",az:"小满意寓小得盈满，谦逊知足，是东方中庸智慧的体现——不求满而求适度。",aj:"小満は小さな充足を意味し、東洋の節度の美徳を表します。",ae:"Grain Buds reflects modesty and sufficiency - knowing when enough is enough."},
+  {qz:"清明节的起源和核心习俗是什么？",qj:"清明節の起源と習慣は？",qe:"Origins of Qingming festival?",az:"清明节源于周代，核心是扫墓祭祖与踏青郊游。寒食禁火、插柳戴柳是重要传统。",aj:"清明節は周代に起源。墓参りと春の遠足が中心です。",ae:"Qingming originates from Zhou Dynasty: tomb sweeping and spring outings."}
+];
 function findAnswer(q,l){q=q.toLowerCase().replace(/[？?的]/g,'');for(let x of QA){if([x.qz.toLowerCase(),x.qj.toLowerCase(),x.qe.toLowerCase()].some(k=>q.includes(k)||k.includes(q)))return l==='jp'?x.aj:l==='en'?x.ae:x.az}if(/^(如何|怎么).*(介绍|解释)/.test(q))return '简洁的跨文化策略：先翻译节气名，再描述物候特征与民俗活动。';if(/^(为什么|为何)/.test(q))return '这是先民在农耕实践中总结的自然节律，融合天文、物候与人文智慧。';return '节气是太阳周年运动在黄道上的24个等分点，反映季节、气候和物候变化。';}
-// === 构建 ===
 const root=document.getElementById('accordionGenesis');
 const fpBar=document.getElementById('footprintBar');
 let RS={};ST.forEach(t=>RS[t.id]={希望:0,思念:0,宁静:0,热烈:0});
@@ -137,7 +138,6 @@ let GR={希望:0,思念:0,宁静:0,热烈:0};
 function buildFP(){fpBar.innerHTML='<span style="font-weight:bold;color:#2d1f0e;white-space:nowrap;">🏮 足迹</span>';const os=['spring','summer','autumn','winter'];const gp={};os.forEach(s=>gp[s]=ST.filter(t=>t.sea===s));const flat=[].concat(...os.map(s=>gp[s]));const cnt=ST.filter(t=>FP[t.id]).length;flat.forEach(t=>{const d=document.createElement('div');d.className='footprint-dot'+(FP[t.id]?' unlocked':'');d.title=t.cn;if(FP[t.id])d.textContent='✓';d.onclick=()=>{document.querySelectorAll('.card-term').forEach(c=>{if(c.dataset.tid===t.id){openCard(c);c.scrollIntoView({behavior:'smooth',block:'center'})}})};fpBar.appendChild(d)});const s=document.createElement('span');s.className='fp-progress-text';s.innerHTML=`${cnt}/24 ${Math.round(cnt/24*100)}%`;fpBar.appendChild(s)}
 function openCard(c){document.querySelectorAll('.card-term.active').forEach(x=>x.classList.remove('active'));c.classList.add('active');const id=c.dataset.tid;if(!FP[id]){FP[id]=true;buildFP()}drawCloud(id)}
 function drawCloud(id){document.querySelectorAll('.detail-panel').forEach(d=>{if(d.dataset.tid!==id)return;const ce=d.querySelector('canvas.cloud-canvas');if(!ce)return;const ctx=ce.getContext('2d');const data=RS[id]||{希望:0,思念:0,宁静:0,热烈:0};ctx.clearRect(0,0,ce.width,ce.height);ctx.fillStyle='#fcf6e8';ctx.fillRect(0,0,ce.width,ce.height);const ems=Object.entries(data).sort((a,b)=>b[1]-a[1]);const tot=ems.reduce((s,[,v])=>s+v,0)||1;const cm={希望:'#3a7a3a',思念:'#7a5a3a',宁静:'#4a6a8a',热烈:'#b04a2a'};const ej={希望:'🌱',思念:'🍃',宁静:'🍂',热烈:'☀️'};let x=15,y=25,lh=0;ems.forEach(([k,v])=>{const f=12+Math.max(0.3,v/tot)*30;ctx.font=`${f}px "KaiTi","Ma Shan Zheng",serif`;ctx.fillStyle=cm[k]||'#6e4f2a';const txt=`${ej[k]}${k} ${v}`,tw=ctx.measureText(txt).width;if(x+tw>ce.width-15){x=15;y+=lh+10;lh=0}ctx.fillText(txt,x,y);x+=tw+12;lh=Math.max(lh,f+3)});ctx.fillStyle='#d4bc90';ctx.font='8px monospace';ctx.textAlign='center';ctx.fillText('✦ 共鸣 ✦',ce.width/2,ce.height-6)})}
-// === 构建卡片 ===
 ST.forEach(t=>{
   const card=document.createElement('div');card.className='card-term';card.dataset.tid=t.id;
   const sc={spring:'#7ab648',summer:'#d4a54a',autumn:'#c47030',winter:'#6090b0'};
@@ -148,7 +148,6 @@ ST.forEach(t=>{
   const dp=document.createElement('div');dp.className='detail-panel';dp.dataset.tid=t.id;
   var _ti=termImg(t), _qs=[{x:0,y:0},{x:1,y:0},{x:0,y:1},{x:1,y:1}];dp.innerHTML='<div class="charm-card"><div class="section-legend">📖 三语时令</div><div class="lang-switch-set" data-ls="1"><button class="lang-pill active" data-l="zh">中文</button><button class="lang-pill" data-l="jp">日本語</button><button class="lang-pill" data-l="en">English</button></div><div class="trilingual-box" data-tp="1">'+t.dz+'</div><div class="poem-miniature" data-po="1">✒️ '+t.pz.substring(0,60)+'</div></div><div class="charm-card"><div class="section-legend">🎨 诗画·四格·拼图</div><div class="quad-grid"><div class="quad-img" style="background:url('+_ti+') '+_qs[0].x*100+'% '+_qs[0].y*100+'% / 200% 200%"></div><div class="quad-img" style="background:url('+_ti+') '+_qs[1].x*100+'% '+_qs[1].y*100+'% / 200% 200%"></div><div class="quad-img" style="background:url('+_ti+') '+_qs[2].x*100+'% '+_qs[2].y*100+'% / 200% 200%"></div><div class="quad-img" style="background:url('+_ti+') '+_qs[3].x*100+'% '+_qs[3].y*100+'% / 200% 200%"></div></div></div><div class="charm-card"><div class="section-legend">🧠 灵境问询</div><div class="qa-list-container" data-qb="1"></div><div class="chat-input-row"><input type="text" class="ci" placeholder="输入节气问题"><button class="ca">🗣️ 问</button></div><div class="chat-response" data-cr="1"></div></div><div class="charm-card"><div class="section-legend">💞 情感共鸣</div><div class="emotion-cloud"><button class="emotion-btn" data-e="希望" style="color:#3a7a3a;">🌱 希望</button><button class="emotion-btn" data-e="思念" style="color:#7a5a3a;">🍃 思念</button><button class="emotion-btn" data-e="宁静" style="color:#4a6a8a;">🍂 宁静</button><button class="emotion-btn" data-e="热烈" style="color:#b04a2a;">☀️ 热烈</button></div><div class="cloud-canvas-wrap"><canvas class="cloud-canvas" width="400" height="100"></canvas></div><div class="resonance-hint" data-rh="1">点击情感·谱写共鸣</div></div>';
   card.appendChild(tv);card.appendChild(closeBtn);card.appendChild(dp);root.appendChild(card);
-  // 事件绑定
   dp.querySelector('[data-ls]').onclick=e=>{const b=e.target.closest('.lang-pill');if(!b)return;b.parentElement.querySelectorAll('.lang-pill').forEach(x=>x.classList.remove('active'));b.classList.add('active');const l=b.dataset.l,lm={zh:{d:t.dz,p:t.pz},jp:{d:t.dj,p:t.pj},en:{d:t.de,p:t.pe}};dp.querySelector('[data-tp]').textContent=lm[l]?.d||t.dz;dp.querySelector('[data-po]').innerHTML='✒️ '+(lm[l]?.p||t.pz).substring(0,65)};
   const qb=dp.querySelector('[data-qb]');
   QA.forEach(qa=>{const qd=document.createElement('div');qd.className='qa-item';qd.innerHTML='<span>❓ '+qa.qz+'</span><span style="color:#b27d48;">▼</span>';const ad=document.createElement('div');ad.className='qa-answer-panel';ad.innerHTML='<strong>📖 中文:</strong> '+qa.az+'<br><strong>🍁 日本語:</strong> '+qa.aj+'<br><strong>🌿 English:</strong> '+qa.ae;qd.onclick=e=>{e.stopPropagation();const v=ad.style.display==='block';qb.querySelectorAll('.qa-answer-panel').forEach(p=>p.style.display='none');ad.style.display=v?'none':'block'};qb.appendChild(qd);qb.appendChild(ad)});
@@ -158,8 +157,6 @@ ST.forEach(t=>{
   card.onclick=e=>{if(e.target.closest('.close-ritual')){card.classList.remove('active');AT.stopAll();return}if(e.target.closest('.detail-panel'))return;openCard(card);if(!AT.active)AT.init();AT.setSeason(t.sea)};
 });
 buildFP();
-
-// === 音频系统（古风氛围音）- 点击页面任意处启动 ===
 class AudioTheater{
   constructor(){this.ctx=null;this.eg=null;this.mg=null;this.tg=null;this.eo=null;this.mo=null;this.active=false;this.season='spring';this.narrLang='zh';}
   init(){
@@ -169,7 +166,6 @@ class AudioTheater{
       this.mg=this.ctx.createGain();this.mg.gain.value=0.5;this.mg.connect(this.ctx.destination);
       this.tg=this.ctx.createGain();this.tg.gain.value=0.8;this.tg.connect(this.ctx.destination);}
     this.active=true;
-    if(window.console)console.log('🎵 音场已启动',this.season);
   }
   setSeason(s){if(s!==this.season){this.season=s;this.update()}}
   update(){
@@ -211,7 +207,6 @@ class AudioTheater{
   }
 }
 const AT=new AudioTheater();
-// 音频控制绑定
 ['env','mus','tts'].forEach(k=>{
   const el=document.getElementById(k+'Vol');
   if(el)el.addEventListener('input',function(){const v=parseFloat(this.value);document.getElementById(k+'Lbl').textContent=Math.round(v*100)+'%';if(k==='env')AT.setEnv(v);else if(k==='mus')AT.setMus(v);else AT.setTTS(v)})
